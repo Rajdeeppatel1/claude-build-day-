@@ -4,6 +4,25 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import AnimatedButton from '../components/AnimatedButton';
+import { useData } from '../context/DataContext';
+
+const STATIC_NGOS = [
+  { name: 'Success Stairs Group of Company', phone: '07554918241', address: 'Bus stops, Ankur complex phase 2 near 6 no, Bhopal, MP 462011' },
+  { name: 'Atmos_24', phone: '09313666555', address: 'S-33, F-Sector, Rajharsh Colony, Kolar Rd, Bhopal, MP 462042' },
+  { name: 'Narayan Seva Sansthan', phone: '09928027946', address: '483, Seva Dham, Seva Nagar, Hiran Magri, Udaipur, Rajasthan 313001' },
+  { name: 'Progressive Advance Welfare Society', phone: '09200004033', address: '208 A Block Pradhan Urban Live Apartment, near Danapani Restaurant, Bhopal, MP 462039' },
+  { name: 'Back To Life Again Foundation', phone: '07415405522', address: 'DK-2/6, Danish Kunj, Kolar Rd, Bhopal, MP 462042' },
+  { name: 'Unnatisheel Chhayaa Path Jan Kalyan Samiti', phone: '07415841689', address: 'H.no 514, opp Himanshu Tower, Ramanand Nagar, Lalghati, Bhopal, MP 462001' },
+  { name: 'Aabhiruchi Jan Kalyan Sansthan', phone: '09993183204', address: '4, 80 Feet Rd, Near Laxmi Mandi School, Ashoka Garden, Bhopal, MP 462010' },
+  { name: 'Roti Bank', phone: '09111004666', address: '63, VIP Road, Nakkar Khana, Peer Gate Area, Bhopal, MP 462001' },
+  { name: 'PRAKRITI - Hope for Stray Animals & Nature', phone: '09826121155', address: 'Prakriti Shelter, Amravat Road, near Barkheda Pathani, Bhopal, MP 462022' },
+  { name: 'Youth for Seva - Bhopal', phone: '08827708913', address: 'BDA Complex, 228, near PNB Bank, near AIIMS, Saket Nagar, Bhopal, MP 462024' },
+  { name: "SOS Children's Villages of India", phone: '07552757588', address: 'Khajuri Kalan Rd, Sukh Sagar Phase-III, Piplani, Bhopal, MP 462022' },
+  { name: "SOS Children's Village Khajuri Kalan", phone: '18001026905', address: 'Kokta Bypass Rd, Bhopal, MP 462022' },
+  { name: 'Human Help Foundation', phone: '07869966499', address: 'HIG 37 Eco Park, Old Subhash Nagar, Bhopal, MP 462023' },
+  { name: 'CPHD Healthcare Foundation (NGO)', phone: '08878924454', address: 'Behind Brilliant Convent School, Barkhedi, Jahangirabad, Bhopal, MP 462008' },
+  { name: 'Arushi India', phone: '07554293399', address: '1, Main Rd 1, Shivaji Nagar, Bhopal, MP 462016' },
+];
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +30,16 @@ export default function HomePage() {
   const containerRef = useRef(null);
   const heroRef = useRef(null);
   const navigate = useNavigate();
+  const { getUsersByRole, getDonations } = useData();
+
+  const registeredNGOs = getUsersByRole('ngo').map(u => ({
+    name: u.organization || u.name,
+    phone: u.phone,
+    address: u.address || 'Address pending verification',
+  }));
+
+  const allNGOs = [...registeredNGOs, ...STATIC_NGOS];
+  const recentDonations = getDonations().slice(0, 6);
   
   useGSAP(() => {
     const elements = gsap.utils.toArray("[data-reveal]");
@@ -259,6 +288,51 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Live Donations Feed */}
+        {recentDonations.length > 0 && (
+          <section style={{ marginTop: '160px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '64px' }}>
+              <h3 data-reveal style={{ fontSize: '3rem', fontWeight: 800 }}>Recent Donations</h3>
+              <span data-reveal style={{ color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>(Live Feed)</span>
+            </div>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
+              {recentDonations.map((donation) => (
+                <div data-reveal key={donation.id} style={{
+                  padding: '24px',
+                  background: 'var(--color-bg-secondary)',
+                  borderRadius: '20px',
+                  border: '1px solid var(--color-border)',
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                    <span style={{ 
+                      padding: '4px 12px', borderRadius: '100px', fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase',
+                      background: donation.status === 'pending' ? 'rgba(234, 179, 8, 0.1)' : 'rgba(16, 185, 129, 0.1)',
+                      color: donation.status === 'pending' ? 'var(--color-amber)' : 'var(--color-teal)'
+                    }}>
+                      {donation.status}
+                    </span>
+                    <span style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
+                      {new Date(donation.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--color-black)', marginBottom: '8px' }}>
+                    {donation.quantity} of {donation.foodType}
+                  </h4>
+                  <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginBottom: '4px' }}>
+                    <i className="ri-map-pin-line" style={{ marginRight: '6px' }}></i>
+                    {donation.area || 'Bhopal'}
+                  </p>
+                  <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
+                    <i className="ri-user-line" style={{ marginRight: '6px' }}></i>
+                    {donation.donorName}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* NGO Partner Directory */}
         <section id="ngo-directory" style={{ marginTop: '160px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '64px' }}>
@@ -270,23 +344,7 @@ export default function HomePage() {
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '20px' }}>
-            {[
-              { name: 'Success Stairs Group of Company', phone: '07554918241', address: 'Bus stops, Ankur complex phase 2 near 6 no, Bhopal, MP 462011' },
-              { name: 'Atmos_24', phone: '09313666555', address: 'S-33, F-Sector, Rajharsh Colony, Kolar Rd, Bhopal, MP 462042' },
-              { name: 'Narayan Seva Sansthan', phone: '09928027946', address: '483, Seva Dham, Seva Nagar, Hiran Magri, Udaipur, Rajasthan 313001' },
-              { name: 'Progressive Advance Welfare Society', phone: '09200004033', address: '208 A Block Pradhan Urban Live Apartment, near Danapani Restaurant, Bhopal, MP 462039' },
-              { name: 'Back To Life Again Foundation', phone: '07415405522', address: 'DK-2/6, Danish Kunj, Kolar Rd, Bhopal, MP 462042' },
-              { name: 'Unnatisheel Chhayaa Path Jan Kalyan Samiti', phone: '07415841689', address: 'H.no 514, opp Himanshu Tower, Ramanand Nagar, Lalghati, Bhopal, MP 462001' },
-              { name: 'Aabhiruchi Jan Kalyan Sansthan', phone: '09993183204', address: '4, 80 Feet Rd, Near Laxmi Mandi School, Ashoka Garden, Bhopal, MP 462010' },
-              { name: 'Roti Bank', phone: '09111004666', address: '63, VIP Road, Nakkar Khana, Peer Gate Area, Bhopal, MP 462001' },
-              { name: 'PRAKRITI - Hope for Stray Animals & Nature', phone: '09826121155', address: 'Prakriti Shelter, Amravat Road, near Barkheda Pathani, Bhopal, MP 462022' },
-              { name: 'Youth for Seva - Bhopal', phone: '08827708913', address: 'BDA Complex, 228, near PNB Bank, near AIIMS, Saket Nagar, Bhopal, MP 462024' },
-              { name: "SOS Children's Villages of India", phone: '07552757588', address: 'Khajuri Kalan Rd, Sukh Sagar Phase-III, Piplani, Bhopal, MP 462022' },
-              { name: "SOS Children's Village Khajuri Kalan", phone: '18001026905', address: 'Kokta Bypass Rd, Bhopal, MP 462022' },
-              { name: 'Human Help Foundation', phone: '07869966499', address: 'HIG 37 Eco Park, Old Subhash Nagar, Bhopal, MP 462023' },
-              { name: 'CPHD Healthcare Foundation (NGO)', phone: '08878924454', address: 'Behind Brilliant Convent School, Barkhedi, Jahangirabad, Bhopal, MP 462008' },
-              { name: 'Arushi India', phone: '07554293399', address: '1, Main Rd 1, Shivaji Nagar, Bhopal, MP 462016' },
-            ].map((ngo, i) => (
+            {allNGOs.map((ngo, i) => (
               <div data-reveal key={i} style={{
                 padding: '28px',
                 background: 'var(--color-bg-secondary)',
