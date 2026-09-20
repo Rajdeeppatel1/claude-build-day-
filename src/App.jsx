@@ -6,6 +6,7 @@ import { NotificationProvider } from './context/NotificationContext';
 // Layouts & UI
 import DashboardLayout from './components/Layout/DashboardLayout';
 import SmoothScroll from './components/SmoothScroll';
+import ChatBot from './components/ChatBot';
 
 // Public Pages
 import HomePage from './pages/HomePage';
@@ -97,6 +98,7 @@ export default function App() {
                 {/* Catch all */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
+              <ChatBot />
             </SmoothScroll>
           </NotificationProvider>
         </DataProvider>

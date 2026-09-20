@@ -234,6 +234,71 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+
+        {/* NGO Partner Directory */}
+        <section style={{ marginTop: '160px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '64px' }}>
+            <h3 data-reveal style={{ fontSize: '3rem', fontWeight: 800 }}>Our NGO Partners</h3>
+            <span data-reveal style={{ color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>(Directory)</span>
+          </div>
+          <p data-reveal style={{ color: 'var(--color-text-secondary)', fontSize: '1.15rem', marginBottom: '48px', maxWidth: '600px' }}>
+            We work with trusted NGOs across Bhopal and beyond to ensure every surplus meal reaches someone in need.
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))', gap: '20px' }}>
+            {[
+              { name: 'Success Stairs Group of Company', phone: '07554918241', address: 'Bus stops, Ankur complex phase 2 near 6 no, Bhopal, MP 462011' },
+              { name: 'Atmos_24', phone: '09313666555', address: 'S-33, F-Sector, Rajharsh Colony, Kolar Rd, Bhopal, MP 462042' },
+              { name: 'Narayan Seva Sansthan', phone: '09928027946', address: '483, Seva Dham, Seva Nagar, Hiran Magri, Udaipur, Rajasthan 313001' },
+              { name: 'Progressive Advance Welfare Society', phone: '09200004033', address: '208 A Block Pradhan Urban Live Apartment, near Danapani Restaurant, Bhopal, MP 462039' },
+              { name: 'Back To Life Again Foundation', phone: '07415405522', address: 'DK-2/6, Danish Kunj, Kolar Rd, Bhopal, MP 462042' },
+              { name: 'Unnatisheel Chhayaa Path Jan Kalyan Samiti', phone: '07415841689', address: 'H.no 514, opp Himanshu Tower, Ramanand Nagar, Lalghati, Bhopal, MP 462001' },
+              { name: 'Aabhiruchi Jan Kalyan Sansthan', phone: '09993183204', address: '4, 80 Feet Rd, Near Laxmi Mandi School, Ashoka Garden, Bhopal, MP 462010' },
+              { name: 'Roti Bank', phone: '09111004666', address: '63, VIP Road, Nakkar Khana, Peer Gate Area, Bhopal, MP 462001' },
+              { name: 'PRAKRITI - Hope for Stray Animals & Nature', phone: '09826121155', address: 'Prakriti Shelter, Amravat Road, near Barkheda Pathani, Bhopal, MP 462022' },
+              { name: 'Youth for Seva - Bhopal', phone: '08827708913', address: 'BDA Complex, 228, near PNB Bank, near AIIMS, Saket Nagar, Bhopal, MP 462024' },
+              { name: "SOS Children's Villages of India", phone: '07552757588', address: 'Khajuri Kalan Rd, Sukh Sagar Phase-III, Piplani, Bhopal, MP 462022' },
+              { name: "SOS Children's Village Khajuri Kalan", phone: '18001026905', address: 'Kokta Bypass Rd, Bhopal, MP 462022' },
+              { name: 'Human Help Foundation', phone: '07869966499', address: 'HIG 37 Eco Park, Old Subhash Nagar, Bhopal, MP 462023' },
+              { name: 'CPHD Healthcare Foundation (NGO)', phone: '08878924454', address: 'Behind Brilliant Convent School, Barkhedi, Jahangirabad, Bhopal, MP 462008' },
+              { name: 'Arushi India', phone: '07554293399', address: '1, Main Rd 1, Shivaji Nagar, Bhopal, MP 462016' },
+            ].map((ngo, i) => (
+              <div data-reveal key={i} style={{
+                padding: '28px',
+                background: 'var(--color-bg-secondary)',
+                borderRadius: '20px',
+                border: '1px solid var(--color-border)',
+                display: 'flex',
+                gap: '16px',
+                alignItems: 'flex-start',
+                transition: 'all 0.3s ease',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--color-black)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.08)'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--color-border)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+              >
+                <div style={{
+                  minWidth: '48px', height: '48px', borderRadius: '14px',
+                  background: 'var(--color-black)', color: 'white',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '1.2rem'
+                }}>
+                  <i className="ri-building-2-fill"></i>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--color-black)' }}>{ngo.name}</h4>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', margin: '0 0 10px', lineHeight: 1.5 }}>{ngo.address}</p>
+                  <a href={`tel:${ngo.phone}`} style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-teal)',
+                    textDecoration: 'none'
+                  }}>
+                    <i className="ri-phone-fill"></i> {ngo.phone}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
 
       {/* Footer */}
