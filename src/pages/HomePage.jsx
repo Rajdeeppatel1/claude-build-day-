@@ -106,10 +106,10 @@ export default function HomePage() {
           <AnimatedButton variant="secondary" icon="ri-search-eye-line" onClick={() => document.getElementById('ngo-directory')?.scrollIntoView({ behavior: 'smooth' })}>
             Explore NGOs
           </AnimatedButton>
-          <AnimatedButton variant="primary" icon="ri-restaurant-line" onClick={() => navigate('/donate')}>
+          <AnimatedButton variant="primary" icon="ri-restaurant-line" onClick={() => navigate('/register?role=donor')}>
             Donate
           </AnimatedButton>
-          <AnimatedButton variant="secondary" icon="ri-user-add-line" onClick={() => navigate('/register')}>
+          <AnimatedButton variant="secondary" icon="ri-user-add-line" onClick={() => navigate('/register?role=ngo')}>
             Register NGO
           </AnimatedButton>
           <AnimatedButton variant="secondary" onClick={() => navigate('/login')}>
