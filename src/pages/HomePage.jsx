@@ -74,6 +74,9 @@ export default function HomePage() {
         </div>
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
           <Link to="/about" style={{ color: 'white', fontWeight: 500, fontSize: '1rem', textShadow: '0 2px 10px rgba(0,0,0,0.2)', marginRight: '8px' }}>About Us</Link>
+          <AnimatedButton variant="secondary" icon="ri-search-eye-line" onClick={() => document.getElementById('ngo-directory')?.scrollIntoView({ behavior: 'smooth' })}>
+            Explore NGOs
+          </AnimatedButton>
           <AnimatedButton variant="primary" icon="ri-restaurant-line" onClick={() => navigate('/donate')}>
             Donate
           </AnimatedButton>
@@ -257,7 +260,7 @@ export default function HomePage() {
         </section>
 
         {/* NGO Partner Directory */}
-        <section style={{ marginTop: '160px' }}>
+        <section id="ngo-directory" style={{ marginTop: '160px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '64px' }}>
             <h3 data-reveal style={{ fontSize: '3rem', fontWeight: 800 }}>Our NGO Partners</h3>
             <span data-reveal style={{ color: 'var(--color-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>(Directory)</span>
