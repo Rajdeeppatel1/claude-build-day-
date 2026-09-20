@@ -46,8 +46,23 @@ export default function HomePage() {
       
       {/* Top Navbar */}
       <nav className="home-navbar" style={{ 
-        position: 'absolute', width: '100%', zIndex: 50, top: 0,
-        padding: '24px 48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+        position: 'fixed', 
+        width: 'calc(100% - 48px)',
+        maxWidth: '1200px',
+        zIndex: 50, 
+        top: '24px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        padding: '12px 24px', 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        background: 'rgba(255, 255, 255, 0.1)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderRadius: '100px',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{ background: 'white', color: 'var(--color-teal)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
