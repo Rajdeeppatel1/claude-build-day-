@@ -72,8 +72,14 @@ export default function HomePage() {
             AnnaSetu
           </span>
         </div>
-        <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
-          <Link to="/about" style={{ color: 'white', fontWeight: 500, fontSize: '1rem', textShadow: '0 2px 10px rgba(0,0,0,0.2)' }}>About Us</Link>
+        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <Link to="/about" style={{ color: 'white', fontWeight: 500, fontSize: '1rem', textShadow: '0 2px 10px rgba(0,0,0,0.2)', marginRight: '8px' }}>About Us</Link>
+          <AnimatedButton variant="primary" icon="ri-restaurant-line" onClick={() => navigate('/donate')}>
+            Donate
+          </AnimatedButton>
+          <AnimatedButton variant="secondary" icon="ri-user-add-line" onClick={() => navigate('/register')}>
+            Register NGO
+          </AnimatedButton>
           <AnimatedButton variant="secondary" onClick={() => navigate('/login')}>
             Sign In
           </AnimatedButton>
